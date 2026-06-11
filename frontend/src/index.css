@@ -1,10 +1,200 @@
 @import "tailwindcss";
 
+@theme {
+  /* ─── Primary Brand Colors ─── */
+  --color-q-blue: #2563EB;
+  --color-q-blue-50: #eff6ff;
+  --color-q-blue-100: #dbeafe;
+  --color-q-blue-200: #bfdbfe;
+  --color-q-blue-300: #93c5fd;
+  --color-q-blue-400: #60a5fa;
+  --color-q-blue-500: #3b82f6;
+  --color-q-blue-600: #2563eb;
+  --color-q-blue-700: #1d4ed8;
+  --color-q-blue-800: #1e40af;
+  --color-q-blue-900: #1e3a8a;
+
+  --color-q-green: #22C55E;
+  --color-q-green-50: #f0fdf4;
+  --color-q-green-100: #dcfce7;
+  --color-q-green-200: #bbf7d0;
+  --color-q-green-300: #86efac;
+  --color-q-green-400: #4ade80;
+  --color-q-green-500: #22c55e;
+  --color-q-green-600: #16a34a;
+  --color-q-green-700: #15803d;
+  --color-q-green-800: #166534;
+  --color-q-green-900: #14532d;
+
+  /* ─── Dark Mode ─── */
+  --color-q-dark: #020617;
+  --color-q-dark-surface: #0F172A;
+  --color-q-dark-elevated: #111827;
+
+  /* ─── Light Mode ─── */
+  --color-q-light: #FFFFFF;
+  --color-q-light-bg: #F8FAFC;
+  --color-q-light-soft: #F1F5F9;
+
+  /* ─── Text ─── */
+  --color-q-text: #0F172A;
+  --color-q-text-secondary: #475569;
+  --color-q-text-muted: #64748B;
+
+  /* ─── Semantic ─── */
+  --color-q-success: #22C55E;
+  --color-q-warning: #F59E0B;
+  --color-q-error: #EF4444;
+
+  /* ─── Backward compat for merchant dashboard ─── */
+  --color-brand-primary: #2563EB;
+  --color-brand-primary-light: #3b82f6;
+  --color-brand-primary-dark: #1d4ed8;
+  --color-brand-secondary: #22C55E;
+  --color-brand-secondary-light: #4ade80;
+  --color-brand-secondary-dark: #16a34a;
+  --color-brand-success: #22C55E;
+  --color-brand-warning: #F59E0B;
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f8fafc;
-  color: #0f172a;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #F8FAFC;
+  color: #0F172A;
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Glassmorphism ─── */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* ─── Gradient Utilities ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #2563EB 0%, #22C55E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #2563EB 0%, #22C55E 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Animations ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+}
+
+@keyframes line-draw {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbit 20s linear infinite;
+}
+
+/* ─── Custom Scrollbar (dark sections) ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(37, 99, 235, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.5);
+}
+
+/* ─── Section Noise Texture ─── */
+.noise-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
 }

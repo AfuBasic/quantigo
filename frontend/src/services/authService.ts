@@ -1,5 +1,5 @@
-import { apiClient, sanctumClient } from '../api/client'
-import type { AuthResponse, LoginCredentials, RegisterPayload, User } from '../types/auth'
+import { apiClient, sanctumClient } from '@/api/client'
+import type { AuthResponse, LoginCredentials, RegisterPayload, User } from '@/types/auth'
 
 export async function login(credentials: LoginCredentials): Promise<AuthResponse> {
   await sanctumClient.get('/sanctum/csrf-cookie')

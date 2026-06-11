@@ -1,7 +1,7 @@
 import { useMemo, useState, type PropsWithChildren } from 'react'
-import * as authService from '../../services/authService'
-import type { LoginCredentials, RegisterPayload, User } from '../../types/auth'
-import { AuthContext } from './authContext'
+import * as authService from '@/services/authService'
+import type { LoginCredentials, RegisterPayload, User } from '@/types/auth'
+import { AuthContext } from '@/features/auth/authContext'
 
 export type AuthContextValue = {
   user: User | null
