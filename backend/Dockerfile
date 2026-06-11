@@ -35,7 +35,8 @@ COPY docker/php/entrypoint.sh /usr/local/bin/quantigo-entrypoint
 
 RUN mkdir -p bootstrap/cache \
     && composer dump-autoload --optimize --no-scripts \
-    && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
+    && mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs storage/app/public \
+    && chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache \
     && chmod +x /usr/local/bin/quantigo-entrypoint
 
