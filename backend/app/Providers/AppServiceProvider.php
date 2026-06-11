@@ -10,6 +10,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Volt\Volt;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.url')) {
+            URL::forceRootUrl(config('app.url'));
+        }
+
+        Volt::mount([
+            resource_path('views/livewire'),
+            resource_path('views/pages'),
+        ]);
+
         Event::listen(
             MerchantRegistered::class,
             SendVerificationEmail::class,
