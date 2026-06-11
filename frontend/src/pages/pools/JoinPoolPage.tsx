@@ -1,18 +1,22 @@
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useState } from 'react'
 import { PageHeader } from '@/components/PageHeader'
+import { useTranslation } from '@/hooks/useTranslation'
+import { ArrowRight } from 'lucide-react'
 
 export function JoinPoolPage() {
   const { poolId } = useParams()
   const navigate = useNavigate()
-  const [amount, setAmount] = useState('5000')
+  const { t } = useTranslation()
+  const [amount, setAmount] = useState('150000')
   const [agreed, setAgreed] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const unitPrice = 66.30
+  // B2B Commerce Sourcing Calculations in Naira (₦)
+  const unitPrice = 15000
   const estimatedUnits = Math.floor(Number(amount) / unitPrice)
-  const retailPrice = 85.00
-  const savings = Math.floor(estimatedUnits * (retailPrice - unitPrice))
+  const retailPrice = 20000
+  const savings = Math.max(0, Math.floor(estimatedUnits * (retailPrice - unitPrice)))
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -24,52 +28,52 @@ export function JoinPoolPage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <PageHeader title="Commit Capital" eyebrow={`Pool: ${poolId ?? 'Bulk OLED Panels'}`} />
+      <PageHeader title={t('joinGroupBuyBtn')} eyebrow={`${t('groupBuyRef')}: ${poolId ?? 'Bulk OLED Panels'}`} />
 
       {success ? (
-        <div className="rounded-2xl bg-brand-success/10 border border-brand-success/20 p-6 text-center space-y-3">
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-brand-success text-white text-xl font-bold">✓</span>
-          <h3 className="text-lg font-bold text-brand-primary">Commitment Submitted Successfully!</h3>
-          <p className="text-sm text-slate-600 font-medium">Your request to commit ${Number(amount).toLocaleString()} is processed. Redirecting...</p>
+        <div className="rounded-[24px] border border-q-green/20 bg-q-green/10 p-8 text-center space-y-4 shadow-xl">
+          <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-q-green text-white text-xl font-bold">✓</div>
+          <h3 className="text-lg font-bold text-white">{t('paymentReqSubmitted')}</h3>
+          <p className="text-sm text-[var(--text-secondary)] font-medium">{t('paymentReqProcessed')}</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm shadow-slate-100/50 space-y-6">
+        <form onSubmit={handleSubmit} className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 sm:p-8 shadow-sm space-y-6">
           <div>
-            <h3 className="text-base font-bold text-brand-primary">Sourcing Commitment Details</h3>
-            <p className="text-xs text-slate-500 mt-1 font-medium">Funds are held securely in escrow until the pool funding target is achieved.</p>
+            <h3 className="text-base font-bold">{t('paymentDetailsLabel')}</h3>
+            <p className="text-xs text-[var(--text-secondary)] mt-1 font-medium">{t('paymentSafeEscrow')}</p>
           </div>
 
           <div className="space-y-2">
-            <label className="block text-xs font-bold text-brand-primary uppercase tracking-wide">Commitment Amount (USD)</label>
+            <label className="block text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wide">{t('yourPaymentAmount')}</label>
             <div className="relative mt-1 rounded-xl shadow-sm">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
-                <span className="text-slate-500 font-semibold text-sm">$</span>
+                <span className="text-[var(--text-secondary)] font-bold text-sm">₦</span>
               </div>
               <input
                 type="number"
-                min="2500"
-                step="500"
+                min="50000"
+                step="10000"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="block w-full rounded-xl border border-slate-200 py-3 pl-8 pr-4 text-sm font-semibold text-brand-primary focus:border-brand-secondary focus:outline-none"
-                placeholder="5000"
+                className="block w-full bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-color)] py-3 pl-8 pr-4 text-sm font-semibold text-[var(--text-primary)] focus:outline-none focus:border-q-blue"
+                placeholder="150000"
                 required
               />
             </div>
-            <p className="text-[11px] text-slate-400 font-medium">Minimum commitment for this pool: $2,500</p>
+            <p className="text-[11px] text-[var(--text-secondary)] font-medium">{t('minPaymentAmountText')} ₦50,000</p>
           </div>
 
           {/* Calculator Card */}
-          <div className="rounded-xl bg-slate-50 p-4 space-y-3 border border-slate-100">
-            <p className="text-xs font-bold text-brand-primary uppercase tracking-wider">Estimated Pool Purchase Power</p>
-            <div className="grid grid-cols-2 gap-4 text-xs font-medium text-slate-600">
+          <div className="rounded-2xl bg-[var(--bg-elevated)] p-5 space-y-3 border border-[var(--border-color)]">
+            <p className="text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">{t('estItemsReceive')}</p>
+            <div className="grid grid-cols-2 gap-4 text-xs font-medium">
               <div>
-                <p className="text-slate-400">Est. Units Procured</p>
-                <p className="text-sm font-bold text-brand-primary mt-0.5">{estimatedUnits} Panels</p>
+                <p className="text-[var(--text-secondary)]">{t('numberOfUnitsLabel')}</p>
+                <p className="text-sm font-bold mt-0.5">{estimatedUnits} Units</p>
               </div>
               <div>
-                <p className="text-slate-400">Est. Savings vs Retail</p>
-                <p className="text-sm font-bold text-brand-success mt-0.5">${savings.toLocaleString()} Saved</p>
+                <p className="text-[var(--text-secondary)]">{t('estimatedSavings')}</p>
+                <p className="text-sm font-bold text-q-green mt-0.5">₦{savings.toLocaleString()} Saved</p>
               </div>
             </div>
           </div>
@@ -81,28 +85,28 @@ export function JoinPoolPage() {
               id="agreement"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-secondary focus:ring-brand-secondary"
+              className="mt-1 h-4 w-4 rounded border-[var(--border-color)] bg-[var(--bg-elevated)] text-q-blue focus:ring-q-blue"
               required
             />
-            <label htmlFor="agreement" className="text-xs text-slate-500 leading-normal font-medium">
-              I agree to lock this capital for the duration of the pool (ends in 8 days). I understand funds will be fully refunded if the target is not reached.
+            <label htmlFor="agreement" className="text-xs text-[var(--text-secondary)] leading-normal font-medium">
+              {t('agreementCheckboxText')}
             </label>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-4 pt-4 border-t border-slate-50">
+          <div className="flex items-center gap-4 pt-4 border-t border-[var(--border-color)]">
             <Link
               to={`/pools/${poolId}`}
-              className="w-1/2 text-center rounded-xl border border-slate-200 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 transition-colors"
+              className="w-1/2 text-center rounded-xl border border-[var(--border-color)] py-3 text-sm font-semibold text-[var(--text-secondary)] hover:bg-[var(--bg-elevated)] transition-colors"
             >
-              Cancel
+              {t('cancelLabel')}
             </Link>
             <button
               type="submit"
               disabled={!agreed}
-              className="w-1/2 rounded-xl bg-brand-secondary py-3 text-sm font-semibold text-white shadow-lg shadow-brand-secondary/25 hover:bg-brand-secondary-dark transition-all disabled:opacity-50 disabled:shadow-none"
+              className="w-1/2 rounded-xl bg-q-blue py-3 text-sm font-semibold text-white shadow-lg shadow-q-blue/20 hover:bg-q-blue-700 transition-all disabled:opacity-50 disabled:shadow-none flex items-center justify-center gap-1.5"
             >
-              Submit Commitment
+              {t('confirmPaymentBtn')} <ArrowRight size={16} />
             </button>
           </div>
         </form>

@@ -1,84 +1,87 @@
 import { PageHeader } from '@/components/PageHeader'
+import { useTranslation } from '@/hooks/useTranslation'
 
 export function PaymentsPage() {
+  const { t } = useTranslation()
+
   const transactions = [
     {
       ref: 'TXN-9381',
       date: 'June 05, 2026',
-      type: 'Escrow Lockup',
-      description: 'Capital commitment for Samsung OLED Panels Pool',
-      amount: '-$45,000.00',
-      status: 'Escrow Locked',
-      statusClass: 'text-brand-secondary bg-brand-secondary/10',
+      type: t('paymentHeldType'),
+      description: 'Money held for Samsung OLED Panels Group Buy',
+      amount: '-₦45,000.00',
+      status: t('heldSafelyStatus'),
+      statusClass: 'text-q-blue bg-q-blue/10 border border-q-blue/20',
     },
     {
       ref: 'TXN-8204',
       date: 'May 28, 2026',
-      type: 'Refund',
-      description: 'Unfilled target refund: Office Desks Pool Q2',
-      amount: '+$15,000.00',
-      status: 'Refunded',
-      statusClass: 'text-brand-success bg-brand-success/10',
+      type: t('refundType'),
+      description: 'Refund for unfilled group buy: Office Desks Q2',
+      amount: '+₦15,000.00',
+      status: t('refundedStatus'),
+      statusClass: 'text-q-green bg-q-green/10 border border-q-green/20',
     },
     {
       ref: 'TXN-7940',
       date: 'April 15, 2026',
-      type: 'Sourcing Payout',
-      description: 'Escrow disbursement to factory line (Custom controllers)',
-      amount: '-$65,000.00',
-      status: 'Released',
-      statusClass: 'text-slate-600 bg-slate-100',
+      type: t('paidToFactoryType'),
+      description: 'Money sent to factory for custom screen panels',
+      amount: '-₦65,000.00',
+      status: t('sentStatus'),
+      statusClass: 'text-[var(--text-secondary)] bg-[var(--bg-elevated)] border border-[var(--border-color)]',
     },
   ]
 
   return (
     <div className="space-y-6">
-      <PageHeader title="Escrow & Payments" eyebrow="Financial Transactions" />
+      <PageHeader title={t('payments')} eyebrow={t('paymentHistoryEyebrow')} />
 
       {/* Account Info Cards */}
       <div className="grid gap-6 sm:grid-cols-3">
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm shadow-slate-100/50">
-          <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Locked in Escrow</p>
-          <p className="text-2xl font-bold text-brand-primary mt-2">$45,000.00</p>
-          <p className="text-[10px] text-slate-400 mt-1 font-semibold">1 active pool commitment</p>
+        <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm">
+          <p className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider">{t('moneyHeldSafely')}</p>
+          <p className="text-2xl font-extrabold text-[var(--text-primary)] mt-2">₦45,000.00</p>
+          <p className="text-[10px] text-[var(--text-secondary)] mt-1 font-semibold">{t('activeGroupBuyPayment')}</p>
         </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm shadow-slate-100/50">
-          <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Disbursements</p>
-          <p className="text-2xl font-bold text-brand-primary mt-2">$77,800.00</p>
-          <p className="text-[10px] text-slate-400 mt-1 font-semibold">Across all historical pools</p>
+        <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm">
+          <p className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider">{t('totalPaidToFactories')}</p>
+          <p className="text-2xl font-extrabold text-[var(--text-primary)] mt-2">₦77,800.00</p>
+          <p className="text-[10px] text-[var(--text-secondary)] mt-1 font-semibold">{t('acrossAllHistorical')}</p>
         </div>
-        <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm shadow-slate-100/50">
-          <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">Active Wallet / Credit</p>
-          <p className="text-2xl font-bold text-brand-success mt-2">$0.00</p>
-          <p className="text-[10px] text-slate-400 mt-1 font-semibold">Connected Account: Bank of America</p>
+        <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm">
+          <p className="text-xs text-[var(--text-secondary)] font-bold uppercase tracking-wider">{t('availableCredit')}</p>
+          <p className="text-2xl font-extrabold text-q-green mt-2">₦0.00</p>
+          <p className="text-[10px] text-[var(--text-secondary)] mt-1 font-semibold">{t('connectedBankAccount')}</p>
         </div>
       </div>
 
       {/* Transactions Table */}
-      <div className="rounded-2xl border border-slate-100 bg-white shadow-sm shadow-slate-100/50 overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-50">
-          <h3 className="text-sm font-bold text-brand-primary">Escrow History & Logs</h3>
+      <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] shadow-sm overflow-hidden">
+        <div className="px-6 py-4 border-b border-[var(--border-color)]">
+          <h3 className="text-sm font-bold text-q-blue">{t('paymentHistoryHeader')}</h3>
         </div>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-100">
-            <thead className="bg-slate-50">
+          <table className="min-w-full divide-y divide-[var(--border-color)]">
+            <thead className="bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
               <tr>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-brand-primary uppercase tracking-wider">Reference</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-brand-primary uppercase tracking-wider">Date</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-brand-primary uppercase tracking-wider">Type</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-brand-primary uppercase tracking-wider">Description</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-brand-primary uppercase tracking-wider">Amount</th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-brand-primary uppercase tracking-wider">Status</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">{t('referenceIdCol')}</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">{t('orderDateCol')}</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">{t('typeCol')}</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">{t('detailsCol')}</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">{t('amountQtyCol')}</th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider">{t('deliveryStatusCol')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 bg-white text-xs font-medium text-slate-700">
+            <tbody className="divide-y divide-[var(--border-color)] bg-[var(--bg-surface)] text-xs font-medium text-[var(--text-secondary)]">
               {transactions.map((tx) => (
-                <tr key={tx.ref} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="whitespace-nowrap px-6 py-4 font-bold text-brand-primary">{tx.ref}</td>
-                  <td className="whitespace-nowrap px-6 py-4 text-slate-500">{tx.date}</td>
-                  <td className="whitespace-nowrap px-6 py-4 font-semibold text-brand-primary">{tx.type}</td>
-                  <td className="px-6 py-4 text-slate-600 font-medium">{tx.description}</td>
-                  <td className={`whitespace-nowrap px-6 py-4 font-bold ${tx.amount.startsWith('+') ? 'text-brand-success' : 'text-brand-primary'}`}>{tx.amount}</td>
+                <tr key={tx.ref} className="hover:bg-[var(--bg-elevated)] transition-colors">
+                  <td className="whitespace-nowrap px-6 py-4 font-bold text-q-blue">{tx.ref}</td>
+                  <td className="whitespace-nowrap px-6 py-4">{tx.date}</td>
+                  <td className="whitespace-nowrap px-6 py-4 font-bold text-[var(--text-primary)]">{tx.type}</td>
+                  <td className="px-6 py-4 font-medium">{tx.description}</td>
+                  <td className={`whitespace-nowrap px-6 py-4 font-bold ${tx.amount.startsWith('+') ? 'text-q-green' : 'text-[var(--text-primary)]'}`}>{tx.amount}</td>
                   <td className="whitespace-nowrap px-6 py-4">
                     <span className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold ${tx.statusClass}`}>
                       {tx.status}

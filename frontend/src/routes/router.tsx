@@ -6,6 +6,7 @@ import { RegisterPage } from '@/pages/auth/RegisterPage'
 import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { NotificationsPage } from '@/pages/notifications/NotificationsPage'
 import { OrdersPage } from '@/pages/orders/OrdersPage'
+import { OrderDetailsPage } from '@/pages/orders/OrderDetailsPage'
 import { PaymentsPage } from '@/pages/payments/PaymentsPage'
 import { BrowsePoolsPage } from '@/pages/pools/BrowsePoolsPage'
 import { JoinPoolPage } from '@/pages/pools/JoinPoolPage'
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
           { path: '/pools/:poolId', element: <PoolDetailsPage /> },
           { path: '/pools/:poolId/join', element: <JoinPoolPage /> },
           { path: '/orders', element: <OrdersPage /> },
+          { path: '/orders/:orderId', element: <OrderDetailsPage /> },
           { path: '/payments', element: <PaymentsPage /> },
           { path: '/notifications', element: <NotificationsPage /> },
           { path: '/profile', element: <ProfilePage /> },

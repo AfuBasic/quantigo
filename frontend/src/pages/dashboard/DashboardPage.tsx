@@ -1,500 +1,571 @@
 import { Link } from "react-router-dom";
+import { useTranslation } from "@/hooks/useTranslation";
 import {
   TrendingUp,
   ShieldCheck,
-  Users,
   ChevronRight,
   ArrowUpRight,
-  Calendar,
   Box,
   Truck,
   Building,
   CheckCircle2,
+  Bell,
+  Archive,
+  ArrowRight,
 } from "lucide-react";
 
 export function DashboardPage() {
+  const { t } = useTranslation();
+
   const merchantInfo = {
     name: "Idris Afuwape",
     business: "Apex Pharmacy Ltd",
-    segment: "Pharmacy",
+    segment: "Pharmacy Store",
     joinedDate: "Jun 2026",
-    kybStatus: "Verified",
+    kybStatus: t("verifiedOperational"),
   };
 
-  // Active pools with SVG progress rings
-  const activePools = [
+  // Section 2: Active Procurement Opportunities
+  const activeOpportunities = [
     {
       id: "pool-1",
-      title: "Bulk Samsung OLED Panels Q3",
-      category: "Electronics",
-      committed: "$45,000",
-      target: "$60,000",
-      progress: 75,
-      participants: 42,
-      daysLeft: 8,
-      yieldRate: "15.4%",
+      title: "Pharmaceutical Consolidated Batch Q3",
+      category: "Medical Supplies",
+      poolSize: "₦1,200,000",
+      targetQty: "₦1,500,000",
+      savingsPotential: "₦420,000",
+      timeRemaining: `3 ${t("dayAgo")}s left`,
+      supplierStatus: "Verified Medisource Ltd",
+      progress: 80,
+      imagePlaceholder: "Medical Batch",
     },
     {
       id: "pool-2",
-      title: "Sustainable Packaging Supplies",
-      category: "Logistics",
-      committed: "$18,000",
-      target: "$25,000",
-      progress: 68,
-      participants: 28,
-      daysLeft: 14,
-      yieldRate: "12.8%",
+      title: "Consolidated Packaging boxes & Cartons",
+      category: "Store Logistics",
+      poolSize: "₦250,000",
+      targetQty: "₦350,000",
+      savingsPotential: "₦75,000",
+      timeRemaining: `9 ${t("dayAgo")}s left`,
+      supplierStatus: "Verified PackAfrica Co.",
+      progress: 71,
+      imagePlaceholder: "Logistics Packs",
     },
-  ];
-
-  // Active orders workflow steps
-  const activeOrders = [
     {
-      id: "QT-2940",
-      product: "Consolidated Pharmaceutical Packs",
-      supplier: "Medipharm Distributors Ltd",
-      amount: "$14,500",
-      currentStep: 2, // 0: Pool Filled, 1: Sourced, 2: Shipped, 3: Arrived, 4: Collected
-      steps: ["Pool Filled", "Sourced", "Shipped", "Arrived", "Collected"],
+      id: "pool-3",
+      title: "Premium Grocery & Cold Chain Pack",
+      category: "Consumables",
+      poolSize: "₦450,000",
+      targetQty: "₦500,000",
+      savingsPotential: "₦120,000",
+      timeRemaining: `12 ${t("dayAgo")}s left`,
+      supplierStatus: "Verified ColdChain Logistics",
+      progress: 90,
+      imagePlaceholder: "Cold Storage",
     },
   ];
 
-  // Savings counters
+  // Section 3: Signature Procurement Activity Timeline
+  const activeTimeline = {
+    id: "QT-2940",
+    product: "Consolidated Pharmaceutical Packs",
+    supplier: "Medipharm Distributors Ltd",
+    amount: "₦850,000",
+    currentStep: 2, // 0: Joined Pool, 1: Procurement Started, 2: Supplier Confirmed, 3: Inventory Arrived, 4: Ready For Collection
+    steps: [
+      t("joinedGroupBuy"),
+      t("orderSentToSupplier"),
+      t("supplierReady"),
+      t("arrivedAtWarehouse"),
+      t("readyForPickup"),
+    ],
+  };
+
+  // Section 4: Savings Intelligence Metrics
   const savingsData = [
     {
-      label: "Lifetime Saved",
-      value: "$22,800",
-      change: "+18.4% Average",
-      trend: "up",
+      label: t("totalSavedThisMonth"),
+      value: "₦45,000",
+      desc: t("comparedToNormalMarket"),
     },
     {
-      label: "Monthly Saved",
-      value: "$4,210",
-      change: "This month vs traditional buying",
-      trend: "up",
+      label: t("myActiveContribution"),
+      value: "₦75,000",
+      desc: t("moneyInsideActiveGroupBuys"),
     },
     {
-      label: "Pool Yield Value",
-      value: "14.2%",
-      change: "Return on consolidated capital",
-      trend: "up",
+      label: t("allTimeSavings"),
+      value: "₦540,000",
+      desc: t("totalMoneySavedOnQuantigo"),
+    },
+  ];
+
+  // Section 5: Recommended Opportunities
+  const recommendedOpportunities = [
+    {
+      title: "Essential Antibiotics Pack",
+      price: `₦120,000 ${t("base")}`,
+      savings: `${t("saveUpTo")} 30%`,
+      category: "Pharmacy Store",
+      tag: "Pharma",
+    },
+    {
+      title: "Consolidated Medical Consumables",
+      price: `₦85,000 ${t("base")}`,
+      savings: `${t("saveUpTo")} 25%`,
+      category: "Medical Supplies",
+      tag: "Consumables",
+    },
+    {
+      title: "Sanitation & Hygiene Bulk Batch",
+      price: `₦150,000 ${t("base")}`,
+      savings: `${t("saveUpTo")} 35%`,
+      category: "Hygiene & Care",
+      tag: "Health",
+    },
+  ];
+
+  // Section 6: Inventory & Collection Logs
+  const inventoryStatus = [
+    {
+      id: "QT-2940",
+      item: "Consolidated Pharma Packs",
+      status: t("onTheWay"),
+      value: "₦850,000",
+      date: `${t("expected")} Jun 14`,
+    },
+    {
+      id: "QT-2804",
+      item: "Sustainable Packaging Boxes",
+      status: t("readyForPickup"),
+      value: "₦120,000",
+      date: "Consolidated Hub Lagos",
+    },
+    {
+      id: "QT-2715",
+      item: "Antibacterial Hygiene Batch",
+      status: t("done"),
+      value: "₦150,000",
+      date: `${t("collected")} May 28`,
+    },
+  ];
+
+  // Section 7: Operations Activity Feed
+  const notifications = [
+    {
+      title: t("poolNearTarget"),
+      desc: t("poolNearTarget"),
+      date: `3 ${t("minsAgo")}`,
+    },
+    {
+      title: t("goodsLeftWarehouse"),
+      desc: t("goodsLeftWarehouse"),
+      date: `2 ${t("hoursAgo")}`,
+    },
+    {
+      title: t("orderConfirmedPacking"),
+      desc: t("orderConfirmedPacking"),
+      date: `1 ${t("dayAgo")}`,
     },
   ];
 
   return (
-    <div className="space-y-8 pb-12">
-      {/* 1. Hero Command Section */}
-      <section className="glass-card rounded-3xl p-6 sm:p-8 border border-white/10 bg-gradient-to-r from-q-dark-surface/80 via-q-dark-surface to-q-blue/5 backdrop-blur-xl relative overflow-hidden">
-        {/* Decorative backdrop shapes */}
-        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-q-green/5 rounded-full blur-[100px] pointer-events-none" />
+    <div className="space-y-10">
+      {/* SECTION 1: Commerce Command Center Hero */}
+      <section className="relative overflow-hidden rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 md:p-8 shadow-sm transition-all duration-300">
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-q-blue/5 rounded-full blur-[120px] pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-q-green/10 border border-q-green/20 px-2.5 py-0.5 text-[10px] font-bold text-q-green">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-q-green/10 border border-q-green/20 text-[10px] font-extrabold text-q-green uppercase tracking-wider">
                 <ShieldCheck size={12} /> KYB {merchantInfo.kybStatus}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10px] font-bold text-white/50">
-                Segment: {merchantInfo.segment}
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/5 border border-[var(--border-color)] text-[10px] font-bold text-[var(--text-secondary)]">
+                {merchantInfo.segment}
               </span>
             </div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">
-              Welcome back,{" "}
-              <span className="gradient-text">{merchantInfo.name}</span>
+
+            <h1 className="text-3xl font-extrabold tracking-tight">
+              {t("commerceCommandCenter")}
             </h1>
-            <p className="text-sm text-white/50 font-medium">
-              Managing commerce operations for{" "}
-              <span className="text-white font-bold">
+            <p className="text-sm text-[var(--text-secondary)] font-medium">
+              {t("storeLogsFor")}{" "}
+              <span className="font-extrabold text-[var(--text-primary)]">
                 {merchantInfo.business}
-              </span>
+              </span>{" "}
+              ({t("joined")} {merchantInfo.joinedDate})
             </p>
           </div>
 
-          {/* Quick Actions Panel */}
-          <div className="flex flex-wrap gap-3">
+          {/* Context Highlight Action */}
+          <div className="flex flex-wrap items-center gap-4 bg-[var(--bg-elevated)] p-4 rounded-2xl border border-[var(--border-color)]">
+            <div className="space-y-0.5">
+              <span className="block text-[10px] font-bold text-[var(--text-secondary)] uppercase tracking-wider">
+                {t("nextActionRequired")}
+              </span>
+              <span className="text-xs font-extrabold text-[var(--text-primary)]">
+                {t("checkMedicineGroupBuy")}
+              </span>
+            </div>
             <Link
               to="/pools"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-q-blue hover:bg-q-blue-700 px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-q-blue/20 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-q-blue hover:bg-q-blue-700 px-4 py-2.5 text-xs font-semibold text-white transition-all shadow-md shadow-q-blue/10"
             >
-              Browse Pools <ChevronRight size={16} />
+              {t("checkNow")} <ArrowRight size={14} />
             </Link>
-            <button
-              onClick={() => alert("Custom procurement requests are active.")}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3.5 text-sm font-semibold text-white transition-all"
-            >
-              Request Custom Sourcing
-            </button>
           </div>
         </div>
       </section>
 
-      {/* 2. Main Work Grid */}
-      <div className="grid gap-8 lg:grid-cols-12">
-        {/* Left Side: 8 Cols */}
-        <div className="lg:col-span-8 space-y-8">
-          {/* Active Pools Section */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <h2 className="text-xl font-bold tracking-tight text-white">
-                  Active Procurement Pools
-                </h2>
-                <p className="text-xs text-white/40 font-medium">
-                  Your current participating demand aggregation pools.
-                </p>
-              </div>
-              <Link
-                to="/pools"
-                className="text-xs font-bold text-q-blue hover:underline flex items-center gap-1"
-              >
-                View all pools <ChevronRight size={14} />
-              </Link>
-            </div>
+      {/* SECTION 2: Active Procurement Opportunities (Horizontal Carousel Scroll) */}
+      <section className="space-y-4">
+        <div>
+          <h2 className="text-xl font-extrabold tracking-tight">
+            {t("openGroupBuys")}
+          </h2>
+          <p className="text-xs text-[var(--text-secondary)] font-medium">
+            {t("openGroupBuysDesc")}
+          </p>
+        </div>
 
-            <div className="grid gap-6 md:grid-cols-2">
-              {activePools.map((pool) => {
-                // SVG Progress Ring calculations
-                const radius = 32;
-                const circumference = 2 * Math.PI * radius;
-                const strokeDashoffset =
-                  circumference - (pool.progress / 100) * circumference;
+        {/* Scrollable container */}
+        <div className="flex gap-6 overflow-x-auto pb-4 scrollbar-thin">
+          {activeOpportunities.map((opportunity) => (
+            <div
+              key={opportunity.id}
+              className="min-w-[300px] sm:min-w-[360px] max-w-[360px] flex-shrink-0 flex flex-col justify-between rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="px-2.5 py-0.5 rounded-lg bg-q-blue/10 border border-q-blue/20 text-[10px] font-extrabold text-q-blue">
+                    {opportunity.category}
+                  </span>
+                  <span className="text-[11px] text-[var(--text-secondary)] font-bold">
+                    {opportunity.timeRemaining}
+                  </span>
+                </div>
 
-                return (
-                  <div
-                    key={pool.id}
-                    className="group relative flex flex-col justify-between rounded-3xl border border-white/5 bg-q-dark-surface/40 p-6 shadow-xl backdrop-blur-md hover:border-white/10 transition-all"
-                  >
-                    <div>
-                      <div className="flex justify-between items-start gap-4">
-                        <div>
-                          <span className="inline-flex rounded-lg bg-q-blue/10 border border-q-blue/25 px-2.5 py-1 text-[10px] font-bold text-q-blue">
-                            {pool.category}
-                          </span>
-                          <h3 className="mt-4 text-base font-bold text-white group-hover:text-q-blue transition-colors">
-                            {pool.title}
-                          </h3>
-                        </div>
+                <div className="space-y-1">
+                  <h3 className="text-base font-extrabold text-[var(--text-primary)] leading-snug">
+                    {opportunity.title}
+                  </h3>
+                  <p className="text-[11px] text-[var(--text-secondary)] font-semibold">
+                    {opportunity.supplierStatus}
+                  </p>
+                </div>
 
-                        {/* Circular Progress Ring */}
-                        <div className="relative flex items-center justify-center shrink-0">
-                          <svg className="w-16 h-16 transform -rotate-90">
-                            <circle
-                              cx="32"
-                              cy="32"
-                              r={radius}
-                              stroke="rgba(255,255,255,0.05)"
-                              strokeWidth="4.5"
-                              fill="transparent"
-                            />
-                            <circle
-                              cx="32"
-                              cy="32"
-                              r={radius}
-                              stroke="#2563EB"
-                              strokeWidth="4.5"
-                              fill="transparent"
-                              strokeDasharray={circumference}
-                              strokeDashoffset={strokeDashoffset}
-                              strokeLinecap="round"
-                              className="transition-all duration-1000"
-                            />
-                          </svg>
-                          <span className="absolute text-xs font-extrabold text-white">
-                            {pool.progress}%
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Pool Metrics */}
-                      <div className="grid grid-cols-2 gap-4 mt-6 border-t border-b border-white/5 py-4">
-                        <div>
-                          <p className="text-[10px] text-white/40 font-bold uppercase">
-                            Committed Capital
-                          </p>
-                          <p className="text-sm text-white font-extrabold mt-0.5">
-                            {pool.committed}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-[10px] text-white/40 font-bold uppercase">
-                            Estimated Yield
-                          </p>
-                          <p className="text-sm text-q-green font-extrabold mt-0.5">
-                            {pool.yieldRate}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 flex items-center justify-between text-xs font-semibold">
-                      <span className="text-white/40 flex items-center gap-1.5">
-                        <Users size={14} className="text-q-blue" />{" "}
-                        {pool.participants} Merchants
-                      </span>
-                      <span className="text-white/40 flex items-center gap-1.5">
-                        <Calendar size={14} /> {pool.daysLeft} days left
-                      </span>
-                    </div>
+                {/* Progress Indicators */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-xs font-bold">
+                    <span className="text-[var(--text-secondary)]">
+                      {t("poolProgress")}
+                    </span>
+                    <span className="text-q-blue">{opportunity.progress}%</span>
                   </div>
-                );
-              })}
-            </div>
-          </div>
+                  <div className="h-1.5 w-full bg-[var(--bg-elevated)] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-q-blue rounded-full transition-all duration-500"
+                      style={{ width: `${opportunity.progress}%` }}
+                    />
+                  </div>
+                  <div className="flex justify-between text-[10px] text-[var(--text-secondary)] font-semibold">
+                    <span>
+                      {t("pooled")}: {opportunity.poolSize}
+                    </span>
+                    <span>
+                      {t("target")}: {opportunity.targetQty}
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-          {/* Active Shipments & Orders Timeline */}
-          <div className="space-y-4">
+              {/* Potential Savings Highlight */}
+              <div className="mt-6 pt-4 border-t border-[var(--border-color)] flex items-center justify-between">
+                <div>
+                  <span className="block text-[9px] text-[var(--text-secondary)] font-bold uppercase">
+                    {t("estimatedSavings")}
+                  </span>
+                  <span className="text-base font-extrabold text-q-green">
+                    {opportunity.savingsPotential}
+                  </span>
+                </div>
+                <Link
+                  to={`/pools/${opportunity.id}`}
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--bg-elevated)] text-[var(--text-primary)] hover:bg-q-blue hover:text-white transition-all shadow-sm"
+                >
+                  <ArrowUpRight size={16} />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Grid wrapper for Activity timelines and Savings info */}
+      <div className="grid gap-8 lg:grid-cols-12">
+        {/* Left pane: 8 columns */}
+        <div className="lg:col-span-8 space-y-8">
+          {/* SECTION 3: My Procurement Activity Timeline */}
+          <section className="space-y-4">
             <div>
-              <h2 className="text-xl font-bold tracking-tight text-white">
-                Consolidated Supply Chain Timeline
+              <h2 className="text-xl font-extrabold tracking-tight">
+                {t("deliveryTracker")}
               </h2>
-              <p className="text-xs text-white/40 font-medium">
-                Real-time shipping and delivery workflows for active inventory
-                pools.
+              <p className="text-xs text-[var(--text-secondary)] font-medium">
+                {t("deliveryTrackerDesc")}
               </p>
             </div>
 
-            {activeOrders.map((order) => (
-              <div
-                key={order.id}
-                className="rounded-3xl border border-white/5 bg-q-dark-surface/40 p-6 shadow-xl backdrop-blur-md space-y-6"
-              >
-                <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-white/5 pb-4">
-                  <div>
-                    <span className="text-[10px] text-white/40 font-bold uppercase">
-                      Active Pipeline
+            <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm space-y-6">
+              <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-[var(--border-color)] pb-4">
+                <div className="space-y-1">
+                  <span className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-wider">
+                    {t("activeGroupBuyOrder")}
+                  </span>
+                  <h4 className="text-base font-bold">
+                    {activeTimeline.product}
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] font-medium">
+                    {t("groupBuyRef")}:{" "}
+                    <span className="text-q-blue font-bold">
+                      {activeTimeline.id}
                     </span>
-                    <h4 className="text-base font-bold text-white mt-0.5">
-                      {order.product}
-                    </h4>
-                    <p className="text-xs text-white/40 font-medium mt-1">
-                      Order Ref:{" "}
-                      <span className="text-q-blue font-bold">{order.id}</span>
-                    </p>
-                  </div>
-                  <div className="text-left sm:text-right">
-                    <p className="text-[10px] text-white/40 font-bold uppercase">
-                      Total Sourced Value
-                    </p>
-                    <p className="text-lg text-q-green font-extrabold mt-0.5">
-                      {order.amount}
-                    </p>
-                  </div>
+                  </p>
                 </div>
+                <div className="text-left sm:text-right space-y-0.5">
+                  <span className="block text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-wider">
+                    {t("myContribution")}
+                  </span>
+                  <p className="text-lg text-[var(--text-primary)] font-extrabold">
+                    {activeTimeline.amount}
+                  </p>
+                </div>
+              </div>
 
-                {/* Modern Linear Step Pipeline */}
-                <div className="relative py-4">
-                  {/* Background Track Line */}
-                  <div className="absolute top-[28px] left-[15px] right-[15px] h-[3px] bg-white/5 z-0" />
+              {/* Horizontal Timeline Track */}
+              <div className="relative py-4">
+                <div className="relative z-10 flex">
+                  {activeTimeline.steps.map((step, idx) => {
+                    const isCompleted = idx < activeTimeline.currentStep;
+                    const isCurrent = idx === activeTimeline.currentStep;
 
-                  {/* Glowing Active Track Line */}
-                  <div
-                    className="absolute top-[28px] left-[15px] h-[3px] bg-gradient-to-r from-q-blue to-q-green z-0 transition-all duration-1000"
-                    style={{
-                      width: `${(order.currentStep / (order.steps.length - 1)) * 90}%`,
-                    }}
-                  />
+                    return (
+                      <div
+                        key={step}
+                        className="relative flex-1 w-0 min-w-0 flex flex-col items-center text-center px-1"
+                      >
+                        {/* Connecting Line to Next Step */}
+                        {idx < activeTimeline.steps.length - 1 && (
+                          <div
+                            className={`absolute top-[15px] left-1/2 w-full h-[3px] z-0 ${
+                              idx < activeTimeline.currentStep - 1
+                                ? "bg-q-green"
+                                : idx === activeTimeline.currentStep - 1
+                                  ? "bg-gradient-to-r from-q-green to-q-blue"
+                                  : "bg-[var(--border-color)]"
+                            }`}
+                          />
+                        )}
 
-                  <div className="relative z-10 flex justify-between">
-                    {order.steps.map((step, idx) => {
-                      const isCompleted = idx < order.currentStep;
-                      const isCurrent = idx === order.currentStep;
-
-                      return (
-                        <div
-                          key={step}
-                          className="flex flex-col items-center text-center max-w-[60px] sm:max-w-[80px]"
-                        >
-                          {/* Step Node Icon/Badge */}
+                        {/* Step Marker */}
+                        <div className="relative z-10 rounded-full bg-[var(--bg-surface)]">
                           <div
                             className={`flex h-8 w-8 items-center justify-center rounded-full border transition-all ${
                               isCompleted
                                 ? "bg-q-green/20 border-q-green text-q-green"
                                 : isCurrent
                                   ? "bg-q-blue/20 border-q-blue text-q-blue ring-4 ring-q-blue/20"
-                                  : "bg-q-dark border-white/10 text-white/20"
+                                  : "bg-[var(--bg-surface)] border-[var(--border-color)] text-[var(--text-muted)]"
                             }`}
                           >
-                            {isCompleted ? (
-                              <CheckCircle2 size={16} />
-                            ) : idx === 2 ? (
-                              <Truck size={16} />
-                            ) : idx === 3 ? (
-                              <Box size={16} />
-                            ) : (
-                              <Building size={16} />
-                            )}
+                          {isCompleted ? (
+                            <CheckCircle2 size={16} />
+                          ) : idx === 2 ? (
+                            <Truck size={14} />
+                          ) : idx === 3 ? (
+                            <Box size={14} />
+                          ) : (
+                            <Building size={14} />
+                          )}
                           </div>
-
-                          {/* Step Label */}
-                          <span
-                            className={`text-[9px] sm:text-[10px] font-bold mt-2 leading-tight ${
-                              isCurrent
-                                ? "text-white font-extrabold"
-                                : isCompleted
-                                  ? "text-white/60 font-semibold"
-                                  : "text-white/20"
-                            }`}
-                          >
-                            {step}
-                          </span>
                         </div>
-                      );
-                    })}
-                  </div>
+
+                        {/* Label */}
+                        <span
+                          className={`text-[9px] sm:text-[10px] font-bold mt-2 leading-tight max-w-[75px] sm:max-w-[100px] ${
+                            isCurrent
+                              ? "text-[var(--text-primary)] font-extrabold"
+                              : "text-[var(--text-secondary)] font-medium"
+                          }`}
+                        >
+                          {step}
+                        </span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          </section>
+
+          {/* SECTION 5: Recommended Opportunities */}
+          <section className="space-y-4">
+            <div>
+              <h2 className="text-xl font-extrabold tracking-tight">
+                {t("suggestedGroupBuys")}
+              </h2>
+              <p className="text-xs text-[var(--text-secondary)] font-medium">
+                {t("suggestedGroupBuysDesc")}
+              </p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-3">
+              {recommendedOpportunities.map((rec, i) => (
+                <div
+                  key={i}
+                  className="group rounded-[20px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div className="space-y-3">
+                    <div className="h-24 rounded-xl bg-[var(--bg-elevated)] flex items-center justify-center border border-[var(--border-color)] overflow-hidden">
+                      <Archive className="h-8 w-8 text-q-blue/30 group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-extrabold text-q-blue bg-q-blue/10 px-2 py-0.5 rounded uppercase tracking-wider">
+                        {rec.tag}
+                      </span>
+                      <h4 className="text-sm font-bold text-[var(--text-primary)] mt-2 line-clamp-1">
+                        {rec.title}
+                      </h4>
+                      <p className="text-xs text-[var(--text-secondary)] mt-1 font-semibold">
+                        {rec.price}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-[var(--border-color)] flex items-center justify-between text-xs font-bold text-q-green">
+                    <span>{rec.savings}</span>
+                    <Link
+                      to="/pools"
+                      className="hover:underline flex items-center gap-0.5"
+                    >
+                      {t("join")} <ChevronRight size={14} />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
 
-        {/* Right Side: 4 Cols */}
+        {/* Right pane: 4 columns */}
         <div className="lg:col-span-4 space-y-8">
-          {/* Savings Widget */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold tracking-tight text-white">
-              Savings Operations
+          {/* SECTION 4: Savings Intelligence */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-extrabold tracking-tight">
+              {t("moneySaved")}
             </h2>
-            <div className="rounded-3xl border border-white/5 bg-q-dark-surface/40 p-6 shadow-xl backdrop-blur-md space-y-6">
+            <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm space-y-6">
               {savingsData.map((sav, i) => (
                 <div
                   key={i}
-                  className="flex items-start justify-between border-b border-white/5 pb-4 last:border-b-0 last:pb-0"
+                  className="flex items-start justify-between border-b border-[var(--border-color)] pb-4 last:border-b-0 last:pb-0"
                 >
                   <div className="space-y-1">
-                    <p className="text-xs text-white/40 font-bold uppercase">
+                    <p className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-wider">
                       {sav.label}
                     </p>
-                    <p className="text-2xl font-extrabold text-white tracking-tight">
+                    <p className="text-2xl font-extrabold text-[var(--text-primary)] tracking-tight">
                       {sav.value}
                     </p>
-                    <p className="text-[10px] text-white/30 font-semibold">
-                      {sav.change}
+                    <p className="text-[10px] text-[var(--text-secondary)] font-semibold">
+                      {sav.desc}
                     </p>
                   </div>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-q-green/10 text-q-green">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-q-green/10 text-q-green">
                     <TrendingUp size={16} />
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          {/* Commerce Intelligence / Insights */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold tracking-tight text-white">
-              Commerce Intelligence
+          {/* SECTION 6: Inventory & Collection Center */}
+          <section className="space-y-4">
+            <h2 className="text-xl font-extrabold tracking-tight">
+              {t("collectionStatus")}
             </h2>
-            <div className="rounded-3xl border border-white/5 bg-q-dark-surface/40 p-6 shadow-xl backdrop-blur-md space-y-6">
-              <div>
-                <p className="text-xs font-bold text-white/40 uppercase mb-3">
-                  Segment Distribution
-                </p>
-
-                {/* Custom SVG Mini Donut Chart */}
-                <div className="flex items-center gap-6">
-                  <div className="relative flex items-center justify-center shrink-0">
-                    <svg className="w-20 h-20 transform -rotate-90">
-                      {/* Background segment (Logistics) */}
-                      <circle
-                        cx="40"
-                        cy="40"
-                        r="30"
-                        stroke="#8B5CF6"
-                        strokeWidth="8"
-                        fill="transparent"
-                        strokeDasharray={2 * Math.PI * 30}
-                        strokeDashoffset={0}
-                      />
-                      {/* Mid segment (Packaging) */}
-                      <circle
-                        cx="40"
-                        cy="40"
-                        r="30"
-                        stroke="#06B6D4"
-                        strokeWidth="8"
-                        fill="transparent"
-                        strokeDasharray={2 * Math.PI * 30}
-                        strokeDashoffset={(30 / 100) * (2 * Math.PI * 30)}
-                      />
-                      {/* Core segment (Pharmaceuticals) */}
-                      <circle
-                        cx="40"
-                        cy="40"
-                        r="30"
-                        stroke="#2563EB"
-                        strokeWidth="8"
-                        fill="transparent"
-                        strokeDasharray={2 * Math.PI * 30}
-                        strokeDashoffset={(55 / 100) * (2 * Math.PI * 30)}
-                      />
-                    </svg>
-                    <div className="absolute flex flex-col items-center">
-                      <span className="text-[10px] font-bold text-white/40 uppercase">
-                        Top
-                      </span>
-                      <span className="text-xs font-extrabold text-white">
-                        Meds
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Legend list */}
-                  <div className="space-y-1.5 flex-1">
-                    {[
-                      {
-                        name: "Meds & Pharma",
-                        percent: "45%",
-                        color: "bg-q-blue",
-                      },
-                      {
-                        name: "Packaging Box",
-                        percent: "25%",
-                        color: "bg-[#06B6D4]",
-                      },
-                      {
-                        name: "Consolidated Freight",
-                        percent: "30%",
-                        color: "bg-[#8B5CF6]",
-                      },
-                    ].map((leg) => (
-                      <div
-                        key={leg.name}
-                        className="flex items-center justify-between text-[10px] font-bold"
-                      >
-                        <div className="flex items-center gap-1.5 text-white/50">
-                          <span
-                            className={`h-2 w-2 rounded-full ${leg.color}`}
-                          />
-                          <span>{leg.name}</span>
-                        </div>
-                        <span className="text-white">{leg.percent}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Actionable insight tip */}
-              <div className="p-4 rounded-2xl bg-q-blue/10 border border-q-blue/20">
-                <div className="flex gap-2.5 items-start">
-                  <ArrowUpRight
-                    size={16}
-                    className="text-q-blue shrink-0 mt-0.5"
-                  />
+            <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm space-y-4">
+              {inventoryStatus.map((inv) => (
+                <div
+                  key={inv.id}
+                  className="flex justify-between items-start border-b border-[var(--border-color)] pb-3 last:border-b-0 last:pb-0"
+                >
                   <div>
-                    <h5 className="text-xs font-bold text-white">
-                      Savings Threshold Near
+                    <h5 className="text-xs font-bold text-[var(--text-primary)]">
+                      {inv.item}
                     </h5>
-                    <p className="text-[10px] text-white/50 mt-1 leading-normal font-medium">
-                      Packaging Supplies pool is at 68%. Joining with another
-                      $2,000 committed capital unlocks the next wholesale tier
-                      for an additional 4% average savings.
+                    <p className="text-[10px] text-[var(--text-secondary)] font-semibold mt-0.5">
+                      {inv.date}
+                    </p>
+
+                    {/* Status Badge */}
+                    <span
+                      className={`inline-flex items-center gap-1 text-[9px] font-extrabold uppercase mt-2 px-2 py-0.5 rounded-full ${
+                        inv.status === t("readyForPickup")
+                          ? "bg-q-green/10 text-q-green"
+                          : inv.status === t("onTheWay")
+                            ? "bg-q-blue/10 text-q-blue"
+                            : "bg-[var(--bg-elevated)] text-[var(--text-secondary)]"
+                      }`}
+                    >
+                      {inv.status}
+                    </span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-[var(--text-primary)]">
+                      {inv.value}
+                    </span>
+                    <p className="text-[9px] text-[var(--text-secondary)] mt-0.5">
+                      {t("groupBuyRef")}: {inv.id}
                     </p>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
+          </section>
+
+          {/* SECTION 7: Operations Activity Feed */}
+          <section className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-extrabold tracking-tight">
+                {t("updates")}
+              </h2>
+              <Bell size={16} className="text-[var(--text-secondary)]" />
+            </div>
+
+            <div className="rounded-[24px] border border-[var(--border-color)] bg-[var(--bg-surface)] p-6 shadow-sm space-y-4">
+              {notifications.map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 border-b border-[var(--border-color)] pb-3 last:border-b-0 last:pb-0"
+                >
+                  <span className="flex h-2 w-2 mt-1.5 rounded-full bg-q-blue shrink-0" />
+                  <div className="space-y-0.5">
+                    <p className="text-xs font-bold text-[var(--text-primary)] leading-tight">
+                      {item.title}
+                    </p>
+                    <p className="text-[10px] text-[var(--text-secondary)] font-medium leading-normal">
+                      {item.desc}
+                    </p>
+                    <p className="text-[8px] text-[var(--text-secondary)] font-bold mt-1 uppercase">
+                      {item.date}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
       </div>
     </div>

@@ -80,7 +80,7 @@ export function HeroSection() {
           {[
             { value: '2,400+', label: 'Active Merchants' },
             { value: '35%', label: 'Average Savings' },
-            { value: '$4.2M', label: 'Procured Volume' },
+            { value: '₦850M+', label: 'Procured Volume' },
           ].map((stat) => (
             <div key={stat.label} className="flex flex-col items-center">
               <p className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{stat.value}</p>
