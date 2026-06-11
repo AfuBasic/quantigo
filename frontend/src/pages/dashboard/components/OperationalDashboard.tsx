@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  ShieldCheck,
-  ArrowRight,
   ChevronRight,
   Archive,
   TrendingUp,
@@ -13,11 +11,10 @@ import {
 } from "lucide-react";
 
 interface OperationalDashboardProps {
-  user: any;
   t: any;
 }
 
-export function OperationalDashboard({ user, t }: OperationalDashboardProps) {
+export function OperationalDashboard({ t }: OperationalDashboardProps) {
   // Opportunity options
   const recommendedOpportunities = [
     { title: "Surgical Gloves Batch 500x", price: "₦15,000", savings: "Save 22%", tag: "Medical" },

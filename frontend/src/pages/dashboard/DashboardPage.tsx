@@ -55,7 +55,7 @@ export function DashboardPage() {
         </div>
       ) : (
         /* FULL VERIFIED OPERATIONAL DASHBOARD */
-        <OperationalDashboard user={user} t={t} />
+        <OperationalDashboard t={t} />
       )}
     </div>
   );
