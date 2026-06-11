@@ -13,12 +13,18 @@ export function MerchantLayout() {
   const [langMenuOpen, setLangMenuOpen] = useState(false)
   const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false)
 
-  const navigation = [
-    { label: t('dashboard'), href: '/dashboard' },
-    { label: t('browsePools'), href: '/pools' },
-    { label: t('orders'), href: '/orders' },
-    { label: t('payments'), href: '/payments' },
-  ]
+  const hasVerifiedEmail = user?.email_verified ?? false;
+  const isKybApproved = user?.merchant_profile?.verification_status === 'approved';
+  const isOnboardingComplete = hasVerifiedEmail && isKybApproved;
+
+  const navigation = isOnboardingComplete
+    ? [
+        { label: t('dashboard'), href: '/dashboard' },
+        { label: t('browsePools'), href: '/pools' },
+        { label: t('orders'), href: '/orders' },
+        { label: t('payments'), href: '/payments' },
+      ]
+    : [{ label: t('dashboard'), href: '/dashboard' }];
 
   // Persistent Theme System
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {

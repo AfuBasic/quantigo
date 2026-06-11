@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useAuth } from '@/hooks/useAuth'
 
 const navLinks = [
   { label: 'Problem', href: '#problem' },
@@ -13,6 +14,7 @@ const navLinks = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -54,22 +56,33 @@ export function Navbar() {
 
         {/* CTA Buttons */}
         <div className="hidden items-center gap-3 md:flex">
-          <Link
-            to="/login"
-            className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
-              scrolled
-                ? 'text-q-text-secondary hover:text-q-text'
-                : 'text-white/80 hover:text-white'
-            }`}
-          >
-            Log in
-          </Link>
-          <Link
-            to="/register"
-            className="rounded-xl bg-q-blue px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-q-blue/25 transition-all hover:bg-q-blue-700 hover:shadow-q-blue/40"
-          >
-            Get Started
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              to="/dashboard"
+              className="rounded-xl bg-q-blue px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-q-blue/25 transition-all hover:bg-q-blue-700 hover:shadow-q-blue/40"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className={`rounded-xl px-5 py-2.5 text-sm font-semibold transition-all ${
+                  scrolled
+                    ? 'text-q-text-secondary hover:text-q-text'
+                    : 'text-white/80 hover:text-white'
+                }`}
+              >
+                Log in
+              </Link>
+              <Link
+                to="/register"
+                className="rounded-xl bg-q-blue px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-q-blue/25 transition-all hover:bg-q-blue-700 hover:shadow-q-blue/40"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -118,22 +131,34 @@ export function Navbar() {
                 </a>
               ))}
               <div className="border-t border-white/10 pt-3 mt-2 flex flex-col gap-2">
-                <Link
-                  to="/login"
-                  onClick={() => setMobileOpen(false)}
-                  className={`rounded-xl px-4 py-3 text-sm font-semibold text-center ${
-                    scrolled ? 'text-q-text border border-slate-200' : 'text-white border border-white/20'
-                  }`}
-                >
-                  Log in
-                </Link>
-                <Link
-                  to="/register"
-                  onClick={() => setMobileOpen(false)}
-                  className="rounded-xl bg-q-blue px-4 py-3 text-sm font-semibold text-white text-center shadow-lg shadow-q-blue/25"
-                >
-                  Get Started
-                </Link>
+                {isAuthenticated ? (
+                  <Link
+                    to="/dashboard"
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-xl bg-q-blue px-4 py-3 text-sm font-semibold text-white text-center shadow-lg shadow-q-blue/25"
+                  >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      onClick={() => setMobileOpen(false)}
+                      className={`rounded-xl px-4 py-3 text-sm font-semibold text-center ${
+                        scrolled ? 'text-q-text border border-slate-200' : 'text-white border border-white/20'
+                      }`}
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      to="/register"
+                      onClick={() => setMobileOpen(false)}
+                      className="rounded-xl bg-q-blue px-4 py-3 text-sm font-semibold text-white text-center shadow-lg shadow-q-blue/25"
+                    >
+                      Get Started
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>

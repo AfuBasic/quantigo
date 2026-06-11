@@ -34,8 +34,7 @@ COPY docker/nginx/default.conf /etc/nginx/sites-available/default
 COPY docker/php/entrypoint.sh /usr/local/bin/quantigo-entrypoint
 
 RUN mkdir -p bootstrap/cache \
-    && composer dump-autoload --optimize \
-    && php artisan package:discover --ansi \
+    && composer dump-autoload --optimize --no-scripts \
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs \
     && chmod -R 775 storage bootstrap/cache \
     && chmod +x /usr/local/bin/quantigo-entrypoint

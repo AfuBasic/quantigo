@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { Lock, Mail, ArrowRight, AlertCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 export function LoginPage() {
   const { login } = useAuth()
@@ -21,15 +22,23 @@ export function LoginPage() {
       await login({ email, password })
       const from = (location.state as { from?: Location } | null)?.from?.pathname ?? '/dashboard'
       navigate(from, { replace: true })
-    } catch {
-      setError('Invalid credentials. Please verify your email and password.')
+    } catch (err: any) {
+      setError(
+        err.response?.data?.message ?? 
+        'Invalid credentials. Please verify your email and password.'
+      )
     } finally {
       setIsLoading(false)
     }
   }
 
   return (
-    <div className="space-y-6">
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+      className="space-y-6"
+    >
       {/* Header */}
       <div>
         <h2 className="text-2xl font-extrabold tracking-tight text-white">Welcome Back</h2>
@@ -46,47 +55,47 @@ export function LoginPage() {
       )}
 
       {/* Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Email */}
         <div>
-          <label className="block text-xs font-bold text-white/50 uppercase tracking-wider mb-2">
-            Business Email
+          <label className="block text-xs font-bold text-white/50 mb-3">
+            Email address
           </label>
           <div className="relative">
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-white placeholder-white/20 focus:outline-none focus:border-q-blue focus:ring-1 focus:ring-q-blue transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-white placeholder-white/30 focus:outline-none focus:border-q-blue focus:ring-1 focus:ring-q-blue transition-all"
               placeholder="name@business.com"
               required
               disabled={isLoading}
             />
-            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/20" />
+            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
           </div>
         </div>
 
         {/* Password */}
         <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="block text-xs font-bold text-white/50 uppercase tracking-wider">
+          <div className="flex justify-between items-center mb-3">
+            <label className="block text-xs font-bold text-white/50">
               Password
             </label>
-            <a href="#" className="text-xs font-bold text-q-blue hover:underline">
+            <Link to="/forgot-password" className="text-xs font-bold text-q-blue hover:underline">
               Forgot password?
-            </a>
+            </Link>
           </div>
           <div className="relative">
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-white placeholder-white/20 focus:outline-none focus:border-q-blue focus:ring-1 focus:ring-q-blue transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-11 pr-4 text-sm text-white placeholder-white/30 focus:outline-none focus:border-q-blue focus:ring-1 focus:ring-q-blue transition-all"
               placeholder="••••••••"
               required
               disabled={isLoading}
             />
-            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/20" />
+            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
           </div>
         </div>
 
@@ -112,6 +121,6 @@ export function LoginPage() {
           </Link>
         </p>
       </div>
-    </div>
+    </motion.div>
   )
 }

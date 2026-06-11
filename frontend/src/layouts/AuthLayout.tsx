@@ -1,8 +1,23 @@
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, Navigate } from 'react-router-dom'
 import { NetworkCanvas } from '@/components/marketing/3d/NetworkCanvas'
-import { ShieldCheck } from 'lucide-react'
+import { ShieldCheck, Loader2 } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 
 export function AuthLayout() {
+  const { isAuthenticated, isLoading } = useAuth()
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-q-dark flex flex-col items-center justify-center text-white space-y-4">
+        <Loader2 className="h-10 w-10 text-q-blue animate-spin" />
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return (
     <main className="relative min-h-screen bg-q-dark overflow-hidden text-white flex items-center justify-center p-4">
       {/* Immersive Dimmed 3D Backdrop */}
