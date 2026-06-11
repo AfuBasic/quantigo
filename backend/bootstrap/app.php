@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Throwable;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -41,6 +42,42 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*'),
+            fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // Production-safe error responses (no stack traces)
+        $exceptions->render(function (Throwable $e, Request $request) {
+            if (app()->hasDebugModeEnabled()) {
+                return null; // Let Laravel show full debug info locally
+            }
+
+            $status = method_exists($e, 'getStatusCode')
+                ? $e->getStatusCode()
+                : 500;
+
+            // API & JSON requests get clean JSON
+            if ($request->is('api/*') || $request->expectsJson()) {
+                $response = [
+                    'error' => match (true) {
+                        $e instanceof \Illuminate\Auth\AuthenticationException => 'Unauthenticated.',
+                        $e instanceof \Illuminate\Auth\Access\AuthorizationException => 'Forbidden.',
+                        $e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException => 'Resource not found.',
+                        $e instanceof \Illuminate\Validation\ValidationException => 'Validation failed.',
+                        $e instanceof \Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException => 'Too many requests.',
+                        $e instanceof \Symfony\Component\HttpKernel\Exception\HttpException => $e->getMessage() ?: 'An error occurred.',
+                        default => 'Internal server error.',
+                    },
+                    'status' => $status,
+                ];
+
+                if ($e instanceof \Illuminate\Validation\ValidationException) {
+                    $response['errors'] = $e->errors();
+                    $status = 422;
+                }
+
+                return response()->json($response, $status);
+            }
+
+            return null; // Let Laravel handle web errors with its default error views
+        });
     })->create();
