@@ -1,93 +1,102 @@
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: quantigo-backend
-    ports:
-      - "8568:80"
-    volumes:
-      - .:/var/www/html
-    env_file:
-      - ./.env
-    environment:
-      DB_HOST: mysql
-      REDIS_HOST: redis
-    depends_on:
-      mysql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    backend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: quantigo-backend
+        ports:
+            - "8568:80"
+        volumes:
+            - .:/var/www/html
+        env_file:
+            - ./.env
+        environment:
+            DB_HOST: mysql
+            REDIS_HOST: redis
+        depends_on:
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
 
-  worker:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: quantigo-worker
-    command: php artisan queue:work --sleep=3 --tries=3
-    volumes:
-      - .:/var/www/html
-    env_file:
-      - ./.env
-    environment:
-      DB_HOST: mysql
-      REDIS_HOST: redis
-    depends_on:
-      mysql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    worker:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: quantigo-worker
+        command: php artisan queue:work --sleep=3 --tries=3
+        volumes:
+            - .:/var/www/html
+        env_file:
+            - ./.env
+        environment:
+            DB_HOST: mysql
+            REDIS_HOST: redis
+        depends_on:
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
 
-  scheduler:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: quantigo-scheduler
-    command: php artisan schedule:work
-    volumes:
-      - .:/var/www/html
-    env_file:
-      - ./.env
-    environment:
-      DB_HOST: mysql
-      REDIS_HOST: redis
-    depends_on:
-      mysql:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    scheduler:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: quantigo-scheduler
+        command: php artisan schedule:work
+        volumes:
+            - .:/var/www/html
+        env_file:
+            - ./.env
+        environment:
+            DB_HOST: mysql
+            REDIS_HOST: redis
+        depends_on:
+            mysql:
+                condition: service_healthy
+            redis:
+                condition: service_healthy
 
-  mysql:
-    image: mysql:8.4
-    container_name: quantigo-mysql
-    ports:
-      - "33068:3306"
-    environment:
-      MYSQL_DATABASE: quantigo
-      MYSQL_USER: quantigo
-      MYSQL_PASSWORD: quantigo
-      MYSQL_ROOT_PASSWORD: quantigo_root
-    volumes:
-      - quantigo_mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pquantigo_root"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+    mysql:
+        image: mysql:8.4
+        container_name: quantigo-mysql
+        ports:
+            - "33068:3306"
+        environment:
+            MYSQL_DATABASE: "${DB_DATABASE}"
+            MYSQL_USER: "${DB_USERNAME}"
+            MYSQL_PASSWORD: "${DB_PASSWORD}"
+            MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+        volumes:
+            - quantigo_mysql_data:/var/lib/mysql
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "mysqladmin",
+                    "ping",
+                    "-h",
+                    "localhost",
+                    "-u$$MYSQL_USER",
+                    "-p$$MYSQL_PASSWORD",
+                ]
+            interval: 10s
+            timeout: 5s
+            retries: 10
 
-  redis:
-    image: redis:7-alpine
-    container_name: quantigo-redis
-    ports:
-      - "63798:6379"
-    volumes:
-      - quantigo_redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
+    redis:
+        image: redis:7-alpine
+        container_name: quantigo-redis
+        ports:
+            - "63798:6379"
+        volumes:
+            - quantigo_redis_data:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 10s
+            timeout: 5s
+            retries: 10
 
 volumes:
-  quantigo_mysql_data:
-  quantigo_redis_data:
+    quantigo_mysql_data:
+    quantigo_redis_data:
