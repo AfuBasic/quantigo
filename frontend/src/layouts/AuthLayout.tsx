@@ -1,6 +1,6 @@
 import { Outlet, Link } from 'react-router-dom'
 import { NetworkCanvas } from '@/components/marketing/3d/NetworkCanvas'
-import { ShieldCheck, Zap, TrendingUp, Building2 } from 'lucide-react'
+import { ShieldCheck, Zap, TrendingUp } from 'lucide-react'
 
 export function AuthLayout() {
   return (
