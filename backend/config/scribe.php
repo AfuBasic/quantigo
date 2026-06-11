@@ -8,6 +8,10 @@ use function Knuckles\Scribe\Config\removeStrategies;
 
 // Only the most common configs are shown. See the https://scribe.knuckles.wtf/laravel/reference/config for all.
 
+if (!class_exists(Defaults::class)) {
+    return [];
+}
+
 return [
     // The HTML <title> for the generated documentation.
     'title' => 'Quantigo API Documentation',
