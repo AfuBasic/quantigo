@@ -66,17 +66,13 @@ services:
         healthcheck:
             test:
                 [
-                    "CMD",
-                    "mysqladmin",
-                    "ping",
-                    "-h",
-                    "localhost",
-                    "-u$$MYSQL_USER",
-                    "-p$$MYSQL_PASSWORD",
+                    "CMD-SHELL",
+                    "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD || exit 1",
                 ]
             interval: 10s
             timeout: 5s
             retries: 10
+            start_period: 30s
 
     redis:
         image: redis:7-alpine
