@@ -62,9 +62,6 @@ export function MerchantLayout() {
               <img src="/quantico-icon.png" className="h-8 w-auto" alt="Quantigo Logo" />
               <span className="text-lg font-extrabold tracking-tight">Quantigo</span>
             </a>
-            <span className="hidden md:inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-q-blue/10 border border-q-blue/20 text-[10px] font-extrabold text-q-blue uppercase tracking-wider">
-              {t('opsConsole')}
-            </span>
           </div>
 
           {/* Center: Main Navigation Links */}

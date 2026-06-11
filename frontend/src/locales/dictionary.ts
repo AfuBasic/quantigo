@@ -3,16 +3,13 @@ export type Language = 'en' | 'yo' | 'ig' | 'pcm' | 'ha';
 export const translations = {
   en: {
     // Navigation
-    dashboard: 'Control Room',
+    dashboard: 'Dashboard',
     browsePools: 'Browse Group Buys',
     orders: 'My Orders',
     payments: 'Payment Logs',
-    opsConsole: 'Shop Manager',
     logout: 'Logout',
     
     // Command Hero
-    commerceCommandCenter: 'Shop Control Room',
-    storeLogsFor: 'Shop manager for',
     nextActionRequired: 'Next task',
     checkMedicineGroupBuy: 'Check Medicine Group Buy details',
     checkNow: 'Check Now',
@@ -201,12 +198,9 @@ export const translations = {
     browsePools: 'Rira Papọ',
     orders: 'Awọn Nnkan ti mo Ra',
     payments: 'Owo ti mo San',
-    opsConsole: 'Ibi Iṣẹ',
     logout: 'Jade',
 
     // Command Hero
-    commerceCommandCenter: 'Ibi Sakoso Oko-owo',
-    storeLogsFor: 'Iṣẹ oko-owo fun',
     nextActionRequired: 'Iṣẹ to kàn',
     checkMedicineGroupBuy: 'Yẹ alaye rira oogun papọ wò',
     checkNow: 'Yẹ wò Nisin',
@@ -395,12 +389,9 @@ export const translations = {
     browsePools: 'Ịzụkọ Ọnụ',
     orders: 'Ihe m zụrụ',
     payments: 'Ụgwọ m Sanụrụ',
-    opsConsole: 'Ibi Ọrụ',
     logout: 'Pụọ',
 
     // Command Hero
-    commerceCommandCenter: 'Ebe Nchịkwa Azụmahịa',
-    storeLogsFor: 'Ọrụ azụmahịa maka',
     nextActionRequired: 'Ihe ị ga-eme ọzọ',
     checkMedicineGroupBuy: 'Lelee nkọwa ịzụkọ ọgwụ ọnụ',
     checkNow: 'Lelee ugbua',
@@ -585,16 +576,13 @@ export const translations = {
   },
   pcm: {
     // Navigation
-    dashboard: 'My Console',
+    dashboard: 'Dashboard',
     browsePools: 'Group Buys',
     orders: 'My Orders',
     payments: 'Payment Logs',
-    opsConsole: 'Work Station',
     logout: 'Commot',
 
     // Command Hero
-    commerceCommandCenter: 'Shop Command Center',
-    storeLogsFor: 'Shop report for',
     nextActionRequired: 'Wetin you need do next',
     checkMedicineGroupBuy: 'Check Medicine Group Buy details',
     checkNow: 'Check am now',
@@ -783,12 +771,9 @@ export const translations = {
     browsePools: 'Duba Sayayya Tare',
     orders: 'Odoji na',
     payments: 'Rahoton Biyan Kudi',
-    opsConsole: 'Manajan Shago',
     logout: 'Fita',
 
     // Command Hero
-    commerceCommandCenter: 'Dakin Gudanar da Shago',
-    storeLogsFor: 'Gudanar da shago na',
     nextActionRequired: 'Aiki na gaba',
     checkMedicineGroupBuy: 'Duba bayanan sayayyar magunguna tare',
     checkNow: 'Duba Yanzu',
