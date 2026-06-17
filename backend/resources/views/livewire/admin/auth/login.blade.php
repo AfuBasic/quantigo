@@ -29,7 +29,7 @@ new #[Layout('components.layouts.admin-guest')] class extends Component {
     <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-sm border border-gray-100">
         <div>
             <div class="flex justify-center mb-6">
-                <img src="{{ asset('images/email/logo.png') }}" alt="Quantigo Logo" class="h-12 w-auto object-contain">
+                <img src="/quantigo-icon.png" alt="Quantigo Logo" class="h-12 w-auto object-contain">
             </div>
             <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
                 Quantigo Ops

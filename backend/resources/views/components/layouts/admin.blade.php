@@ -30,6 +30,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title }} - Quantigo Ops</title>
+    <link rel="icon" type="image/png" href="/quantigo-icon.png">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700" rel="stylesheet" />
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -54,10 +55,8 @@
             
             <!-- Logo Area -->
             <div class="h-16 flex items-center px-6 border-b border-slate-100 dark:border-slate-800/50">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm shadow-blue-500/20">
-                        <i data-lucide="command" class="text-white w-5 h-5"></i>
-                    </div>
+                <div class="flex items-center gap-3">
+                    <img src="/quantigo-icon.png" class="w-8 h-8 object-contain" alt="Quantigo Logo">
                     <span class="font-bold tracking-tight text-slate-900 dark:text-white">Quantigo Ops</span>
                 </div>
             </div>
