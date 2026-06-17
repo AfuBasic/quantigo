@@ -35,8 +35,25 @@ return new class extends Migration
             $table->string('director_identity_path')->nullable();
 
             // Status Check
-            $table->enum('verification_status', ['unsubmitted', 'pending', 'approved', 'rejected'])->default('unsubmitted');
-            $table->text('verification_notes')->nullable();
+            $table->enum('verification_status', [
+                'unsubmitted', 
+                'submitted', 
+                'under_review', 
+                'additional_information_requested', 
+                'resubmitted', 
+                'compliance_review', 
+                'approved', 
+                'rejected'
+            ])->default('unsubmitted');
+            
+            // Workflow columns
+            $table->foreignId('reviewer_id')->nullable()->constrained('admins')->nullOnDelete();
+            $table->timestamp('review_started_at')->nullable();
+            $table->timestamp('review_completed_at')->nullable();
+            $table->text('rejection_reason')->nullable();
+            $table->text('internal_notes')->nullable();
+            $table->json('requested_information')->nullable();
+            $table->json('approval_metadata')->nullable();
 
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Notifications\Auth\VerifyEmailNotification;
 use App\Notifications\Auth\ResetPasswordNotification;
+use Illuminate\Support\Facades\URL;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -38,10 +39,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $frontendUrl = rtrim(config('app.frontend_url'), '/');
 
-        $url = $frontendUrl . '/verify-email?' . http_build_query([
-            'id' => $this->getKey(),
-            'hash' => sha1($this->getEmailForVerification()),
-        ]);
+        $backendUrl = URL::temporarySignedRoute(
+            'api.v1.auth.verification.verify',
+            now()->addMinutes(config('auth.verification.expire', 60)),
+            [
+                'id' => $this->getKey(),
+                'hash' => sha1($this->getEmailForVerification()),
+            ]
+        );
+
+        $query = parse_url($backendUrl, PHP_URL_QUERY);
+        $url = $frontendUrl . '/verify-email?' . $query;
 
         $this->notify(new VerifyEmailNotification($url));
     }

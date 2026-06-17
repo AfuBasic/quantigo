@@ -26,11 +26,29 @@ class MerchantProfile extends Model
         'director_nin',
         'director_identity_path',
         'verification_status',
-        'verification_notes',
+        'reviewer_id',
+        'review_started_at',
+        'review_completed_at',
+        'rejection_reason',
+        'internal_notes',
+        'requested_information',
+        'approval_metadata',
+    ];
+
+    protected $casts = [
+        'review_started_at' => 'datetime',
+        'review_completed_at' => 'datetime',
+        'requested_information' => 'array',
+        'approval_metadata' => 'array',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function history()
+    {
+        return $this->hasMany(MerchantVerificationHistory::class);
     }
 }

@@ -10,7 +10,13 @@ class VerifyEmailAction
 {
     public static function execute(int $userId, string $hash): void
     {
-        $user = User::findOrFail($userId);
+        $user = User::find($userId);
+
+        if (! $user) {
+            throw ValidationException::withMessages([
+                'id' => ['User not found. The verification link is invalid.'],
+            ]);
+        }
 
         if (! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
             throw ValidationException::withMessages([

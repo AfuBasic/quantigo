@@ -47,7 +47,9 @@ class AppServiceProvider extends ServiceProvider
         );
 
         VerifyEmail::createUrlUsing(function ($notifiable) {
-            return URL::temporarySignedRoute(
+            $frontendUrl = config('app.frontend_url');
+
+            $backendUrl = URL::temporarySignedRoute(
                 'api.v1.auth.verification.verify',
                 now()->addMinutes(config('auth.verification.expire', 60)),
                 [
@@ -55,6 +57,10 @@ class AppServiceProvider extends ServiceProvider
                     'hash' => sha1($notifiable->getEmailForVerification()),
                 ]
             );
+
+            $query = parse_url($backendUrl, PHP_URL_QUERY);
+
+            return rtrim($frontendUrl, '/') . '/verify-email?' . $query;
         });
     }
 }

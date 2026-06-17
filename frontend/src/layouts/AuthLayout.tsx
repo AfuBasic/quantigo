@@ -1,10 +1,11 @@
-import { Outlet, Link, Navigate } from 'react-router-dom'
+import { Outlet, Link, Navigate, useLocation } from 'react-router-dom'
 import { NetworkCanvas } from '@/components/marketing/3d/NetworkCanvas'
 import { ShieldCheck, Loader2 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
 export function AuthLayout() {
   const { isAuthenticated, isLoading } = useAuth()
+  const location = useLocation()
 
   if (isLoading) {
     return (
@@ -14,7 +15,7 @@ export function AuthLayout() {
     );
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated && location.pathname !== '/verify-email') {
     return <Navigate to="/dashboard" replace />;
   }
 

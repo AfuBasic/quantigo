@@ -19,6 +19,7 @@ import { LandingPage } from '@/pages/marketing/LandingPage'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 import { RootErrorPage } from '@/pages/errors/RootErrorPage'
 import { NotFoundPage } from '@/pages/errors/NotFoundPage'
+import { VerificationDashboardPage } from '@/features/verification/pages/VerificationDashboardPage'
 
 // In dev: let Vite's native overlay show full stack traces.
 // In production/staging: show the polished custom error page.
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
           { path: '/payments', element: <PaymentsPage /> },
           { path: '/notifications', element: <NotificationsPage /> },
           { path: '/profile', element: <ProfilePage /> },
+          { path: '/verification', element: <VerificationDashboardPage /> },
         ],
       },
     ],

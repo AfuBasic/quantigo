@@ -3,10 +3,12 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { CheckCircle, AlertCircle, Loader2, ArrowRight } from 'lucide-react'
 import * as authService from '@/services/authService'
 import { motion } from 'framer-motion'
+import { useAuth } from '@/hooks/useAuth'
 
 export function VerifyEmailPage() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const { isAuthenticated, refreshUser } = useAuth()
 
   const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying')
   const [message, setMessage] = useState('Verifying your email address, please wait...')
@@ -26,6 +28,9 @@ export function VerifyEmailPage() {
     async function triggerVerification() {
       try {
         await authService.verifyEmail(id!, hash!, expires, signature)
+        if (isAuthenticated) {
+          await refreshUser()
+        }
         setStatus('success')
         setMessage('Your email has been successfully verified! You can now access your dashboard.')
       } catch (err: any) {

@@ -23,8 +23,12 @@ export function MerchantLayout() {
         { label: t('browsePools'), href: '/pools' },
         { label: t('orders'), href: '/orders' },
         { label: t('payments'), href: '/payments' },
+        { label: 'Verification', href: '/verification' },
       ]
-    : [{ label: t('dashboard'), href: '/dashboard' }];
+    : [
+        { label: t('dashboard'), href: '/dashboard' },
+        { label: 'Verification', href: '/verification' }
+      ];
 
   // Persistent Theme System
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -252,6 +256,17 @@ export function MerchantLayout() {
 
       {/* Main Content Pane */}
       <main className="max-w-7xl mx-auto px-6 py-10">
+        {!isOnboardingComplete && user?.merchant_profile && (
+          <div className="mb-8 rounded-xl p-4 border flex items-center justify-between shadow-sm bg-amber-50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800/50">
+            <div>
+              <h3 className="text-sm font-bold text-amber-800 dark:text-amber-400">Business Verification Required</h3>
+              <p className="text-xs text-amber-700 dark:text-amber-300 mt-0.5">Please complete your business verification to unlock all features.</p>
+            </div>
+            <NavLink to="/verification" className="text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 px-4 py-2 rounded-lg transition-colors">
+              Verify Now
+            </NavLink>
+          </div>
+        )}
         <Outlet />
       </main>
 

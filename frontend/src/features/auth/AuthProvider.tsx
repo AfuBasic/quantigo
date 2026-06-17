@@ -12,6 +12,7 @@ export type AuthContextValue = {
   register: (payload: RegisterPayload) => Promise<void>
   logout: () => Promise<void>
   submitKyb: (payload: any) => Promise<void>
+  refreshUser: () => Promise<void>
 }
 
 const tokenKey = 'quantigo.auth_token'
@@ -81,6 +82,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
       const response = await authService.submitKyb(payload)
       localStorage.setItem(userKey, JSON.stringify(response.user))
       setUser(response.user)
+    },
+    async refreshUser() {
+      const currentUser = await authService.fetchCurrentUser()
+      localStorage.setItem(userKey, JSON.stringify(currentUser))
+      setUser(currentUser)
     },
   }), [token, user, isLoading])
 
